@@ -102,7 +102,7 @@ public class Prologue {
         System.out.println("Atlas: Dunno, you best get o'er there, and be quick about it! The splicers are coming" + ANSI_RESET);
         scanner.nextLine();
         AudioManager.fadeClip(welcomeToRapture, 50);
-        System.out.println("The bathysphere starts docking in some sort of submarine port" +
+        System.out.println("The bathysphere starts docking in some sort of submarine port. " +
                 "The city logo with the words RAPTURE, and its slogan \"Ad Idem - Meeting of the minds\" appears");
         welcomeToRapture.stop();
         scanner.nextLine();
@@ -163,7 +163,7 @@ public class Prologue {
         scanner.nextLine();
         System.out.println("Immediately, you started to feel pain, and at the same time, surges of energy");
         scanner.nextLine();
-        System.out.println(ANSI_CYAN + "Atlas: Steady now! Your genetic code is being rewritten - just hold on and" +
+        System.out.println(ANSI_CYAN + "Atlas: Steady now! Your genetic code is being rewritten - just hold on and " +
                 "everything will be fine!" + ANSI_RESET);
         scanner.nextLine();
         System.out.println("You finally couldn't stand the pain and collapsed. Everything turned black");
