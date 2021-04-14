@@ -9,6 +9,9 @@ public class Game {
     private int currentXSpot = 5;
     private int currentYSpot = 6;
 
+    private int health = 100;
+    private int eve = 5;
+
     private void movePlayer(String command) {
         switch (command) {
             case "u" -> {
@@ -35,7 +38,20 @@ public class Game {
                 else
                     currentXSpot += 1;
             }
+            default -> System.out.println("This shouldn't happen lol");
         }
+
+        Battle battle = new Battle(health, eve);
+        battle.start();
+        health = battle.getRemainingHealth();
+        eve = battle.getRemainingEve();
+    }
+
+    private void showCommands() {
+        System.out.println();
+        System.out.println("map - displays the map and your current position");
+        System.out.println("status - displays your health and EVE value");
+        System.out.println();
     }
 
     public void main() {
@@ -51,8 +67,14 @@ public class Game {
 
                 if (input.equals("u") || input.equals("d") || input.equals("r") || input.equals("l")) {
                     movePlayer(input);
+                } else if(input.equals("commands")) {
+                    showCommands();
                 } else if (input.equals("map")) {
                     map.displayMap(currentXSpot, currentYSpot);
+                } else if(input.equals("status")) {
+                    System.out.println();
+                    System.out.println("Health: " + health + " | EVE: " + eve);
+                    System.out.println();
                 } else {
                     System.out.println("Try again with a valid input!\n");
                 }
