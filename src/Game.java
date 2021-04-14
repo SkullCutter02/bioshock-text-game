@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Game {
     private final int MAP_X = 11;
@@ -15,12 +16,58 @@ public class Game {
     private int coins = 0;
 
     private void action() {
-        Battle battle = new Battle(health, eve, coins, inventory);
-        battle.start();
-        health = battle.getRemainingHealth();
-        eve = battle.getRemainingEve();
-        coins = battle.getRemainingCoins();
-        inventory = battle.getRemainingInventory();
+        System.out.println();
+        int n = ThreadLocalRandom.current().nextInt(0, 101);
+        System.out.println(n);
+
+        if (n < 30) {
+            RandomCollection<DropItem> collection = new RandomCollection<DropItem>()
+                    .add(45, new DropItem("coins", "coins"))
+                    .add(15, new DropItem("pistol ammo", "pistol"))
+                    .add(15, new DropItem("machine gun ammo", "machine gun"))
+                    .add(10, new DropItem("health pack", "health pack"))
+                    .add(5, new DropItem("eve hypo", "eve hypo"))
+                    .add(10, new DropItem("shotgun ammo", "shotgun"));
+            DropItem item = collection.next();
+
+            if(item.getName().equals("coins")) {
+                int r = ThreadLocalRandom.current().nextInt(5, 15);
+                coins += r;
+                System.out.println("You found " + r + " coins lying on the floor. You took the coins");
+            } else if(item.getName().equals("health pack")) {
+                inventory.addHealthPack();
+                System.out.println("You found a health pack lying on the floor. You took the health pack");
+            } else if(item.getName().equals("eve hypo")) {
+                inventory.addEveHypo();
+                System.out.println("You found an eve hypo lying on the floor. You took the eve hypo");
+            } else if(item.getName().split(" ")[item.getName().split(" ").length - 1].equals("ammo")) {
+                Weapon weapon = inventory.getWeapon(item.getTarget());
+
+                if(weapon != null) {
+                    if(weapon.getName().equalsIgnoreCase("pistol")) {
+                        int r = ThreadLocalRandom.current().nextInt(1, 3);
+                        weapon.addAmmo(r);
+                        System.out.println("You found " + r + " pistol ammo lying on the floor. You took the ammo");
+                    } else if(weapon.getName().equalsIgnoreCase("machine gun")) {
+                        int r = ThreadLocalRandom.current().nextInt(5, 30);
+                        weapon.addAmmo(r);
+                        System.out.println("You found " + r + " machine gun ammo lying on the floor. You took the ammo");
+                    } else if(weapon.getName().equalsIgnoreCase("shotgun")) {
+                        weapon.addAmmo(1);
+                        System.out.println("You found a shotgun ammo lying on the floor. You took the ammo");
+                    }
+                }
+            }
+
+            System.out.println();
+        } else {
+            Battle battle = new Battle(health, eve, coins, inventory);
+            battle.start();
+            health = battle.getRemainingHealth();
+            eve = battle.getRemainingEve();
+            coins = battle.getRemainingCoins();
+            inventory = battle.getRemainingInventory();
+        }
     }
 
     private void movePlayer(String command) {
@@ -85,29 +132,29 @@ public class Game {
 
                 if (input.equals("u") || input.equals("d") || input.equals("r") || input.equals("l")) {
                     movePlayer(input);
-                } else if(input.equals("commands")) {
+                } else if (input.equals("commands")) {
                     showCommands();
                 } else if (input.equals("map")) {
                     map.displayMap(currentXSpot, currentYSpot);
-                } else if(input.equals("status")) {
+                } else if (input.equals("status")) {
                     System.out.println();
                     System.out.println("Health: " + health + " | EVE: " + eve + " | Coins: " + coins);
                     System.out.println();
-                } else if(input.equals("inventory")) {
+                } else if (input.equals("inventory")) {
                     inventory.show();
-                } else if(input.equals("use-health")) {
+                } else if (input.equals("use-health")) {
                     boolean canUse = inventory.useHealthPack();
-                    if(canUse) {
+                    if (canUse) {
                         health = Math.min(100, health + 50);
                         System.out.println("You restored your health to " + health);
                     }
-                } else if(input.equals("use-eve")) {
+                } else if (input.equals("use-eve")) {
                     boolean canUse = inventory.useEveHypo();
-                    if(canUse) {
+                    if (canUse) {
                         eve = Math.min(5, eve + 3);
                         System.out.println("You restored your EVE level to " + eve);
                     }
-                } else if(input.split(" ")[0].equals("get-info")) {
+                } else if (input.split(" ")[0].equals("get-info")) {
                     String[] splitted = input.split(" ", 2);
                     inventory.getItemDescription(splitted[1]);
                 } else

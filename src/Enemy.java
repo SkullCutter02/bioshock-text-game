@@ -12,7 +12,7 @@ public class Enemy {
 
     private boolean stunned = false;
 
-    private RandomCollection<DropItem> randomCollection;
+    private final RandomCollection<DropItem> randomCollection;
 
     public Enemy(int health, String name, String description, List<Attack> attacks,
                  int dodgeRate, RandomCollection<DropItem> randomCollection) {

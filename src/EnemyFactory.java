@@ -12,8 +12,8 @@ public class EnemyFactory {
             new Attack(5, "Iceball", "shot a big ball of ice towards you"), // 7
             new Attack(20, "Grenade Throw", "threw a grenade that exploded in front of you"), // 8
             new Attack(5, "Molotov Cocktail", "threw a molotov cocktail that exploded in front of you"), // 9
-            new Attack(5, "Rock Throw", "picked up a huge piece of rock and hurled it at you"), // 10
-            new Attack(8, "Smash", "held up its big, meaty hands and smashed it on you") // 11
+            new Attack(4, "Rock Throw", "picked up a huge piece of rock and hurled it at you"), // 10
+            new Attack(6, "Smash", "held up its big, meaty hands and smashed it on you") // 11
     );
 
     private final List<Enemy> enemies = Arrays.asList(
@@ -58,8 +58,7 @@ public class EnemyFactory {
                             .add(45, new DropItem("coins", "coins"))
                             .add(15, new DropItem("pistol ammo", "pistol"))
                             .add(15, new DropItem("machine gun ammo", "machine gun"))
-                            .add(10, new DropItem("health pack", "health pack"))
-                            .add(5, new DropItem("eve hypo", "eve hypo"))
+                            .add(15, new DropItem("health pack", "health pack"))
                             .add(10, new DropItem("shotgun ammo", "shotgun")))
     );
 
