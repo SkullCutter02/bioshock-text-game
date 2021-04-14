@@ -11,6 +11,7 @@ public class Enemy {
     private final List<Attack> attacks;
 
     private boolean stunned = false;
+    private boolean burnt = false;
 
     private final RandomCollection<DropItem> randomCollection;
 
@@ -44,6 +45,10 @@ public class Enemy {
         return stunned;
     }
 
+    public boolean isBurnt() {
+        return burnt;
+    }
+
     public void damage(int amount) {
         this.health = this.health - amount;
     }
@@ -54,6 +59,14 @@ public class Enemy {
 
     public void unstun() {
         this.stunned = false;
+    }
+
+    public void burn() {
+        this.burnt = true;
+    }
+
+    public void unburn() {
+        this.burnt = false;
     }
 
     public List<Attack> getAttacks() {
