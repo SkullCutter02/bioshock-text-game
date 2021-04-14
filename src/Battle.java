@@ -66,13 +66,16 @@ public class Battle {
                     } else {
                         System.out.println("You attacked with your " + playerWeapon.getName().toLowerCase());
                         int r = (new Random()).nextInt(100);
+                        int headshotRate = (new Random()).nextInt(100);
 
                         if (r < enemy.getDodgeRate()) {
                             System.out.println("The " + enemy.getName() + " dodged your attack");
                         } else {
-                            enemy.damage(playerWeapon.getDamage());
+                            if(headshotRate <= 10) System.out.println("It's a headshot!");
+                            int damage = headshotRate <= 10 ? playerWeapon.getDamage() * 2 : playerWeapon.getDamage();
+                            enemy.damage(damage);
                             playerWeapon.use();
-                            System.out.println("You dealt " + playerWeapon.getDamage() + " damage to the " + enemy.getName());
+                            System.out.println("You dealt " + damage + " damage to the " + enemy.getName());
                             System.out.println("The " + enemy.getName() + " is now on " + enemy.getHealth() + "HP");
 
                             if (enemy.getHealth() <= 0) break;

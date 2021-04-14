@@ -51,13 +51,14 @@ public class Weapon {
     }
 
     public void reload() {
-        this.currentAmmoCount = Math.min(maxAmmo, ammoCount);
-        ammoCount = Math.max(0, ammoCount - maxAmmo);
-
-        if(ammoCount == 0)
+        if(ammoCount <= 0)
             System.out.println("You ran out of ammo for your " + name + "!");
         else
             System.out.println(name + " successfully reloaded!");
+
+        this.currentAmmoCount = Math.min(maxAmmo, ammoCount);
+        ammoCount = Math.max(0, ammoCount - maxAmmo);
+
     }
 
     public void use() {
