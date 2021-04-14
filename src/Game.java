@@ -88,12 +88,16 @@ public class Game {
                     inventory.show();
                 } else if(input.equals("use-health")) {
                     boolean canUse = inventory.useHealthPack();
-                    if(canUse) health = Math.min(100, health + 50);
-                    System.out.println("You restored your health to " + health);
+                    if(canUse) {
+                        health = Math.min(100, health + 50);
+                        System.out.println("You restored your health to " + health);
+                    }
                 } else if(input.equals("use-eve")) {
                     boolean canUse = inventory.useEveHypo();
-                    if(canUse) eve = Math.min(5, eve + 3);
-                    System.out.println("You restored your EVE level to " + eve);
+                    if(canUse) {
+                        eve = Math.min(5, eve + 3);
+                        System.out.println("You restored your EVE level to " + eve);
+                    }
                 } else if(input.split(" ")[0].equals("get-info")) {
                     String[] splitted = input.split(" ", 2);
                     inventory.getItemDescription(splitted[1]);

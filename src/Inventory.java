@@ -34,8 +34,10 @@ public class Inventory {
     }
 
     public boolean useHealthPack() {
-        if(healthPackCount <= 0)
+        if(healthPackCount <= 0) {
+            System.out.println("You have no more health packs!");
             return false;
+        }
         else {
             this.healthPackCount--;
             return true;
@@ -43,8 +45,10 @@ public class Inventory {
     }
 
     public boolean useEveHypo() {
-        if(eveHypoCount <= 0)
+        if(eveHypoCount <= 0) {
+            System.out.println("You have no more EVE hypos!");
             return false;
+        }
         else {
             this.eveHypoCount--;
             return true;
