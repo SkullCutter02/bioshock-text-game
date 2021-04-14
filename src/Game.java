@@ -12,7 +12,7 @@ public class Game {
 
     private int health = 100;
     private int eve = 5;
-
+    private int coins = 0;
 
     private void movePlayer(String command) {
         switch (command) {
@@ -43,10 +43,11 @@ public class Game {
             default -> System.out.println("This shouldn't happen lol");
         }
 
-        Battle battle = new Battle(health, eve, inventory);
+        Battle battle = new Battle(health, eve, coins, inventory);
         battle.start();
         health = battle.getRemainingHealth();
         eve = battle.getRemainingEve();
+        coins = battle.getRemainingCoins();
         inventory = battle.getRemainingInventory();
     }
 
@@ -81,7 +82,7 @@ public class Game {
                     map.displayMap(currentXSpot, currentYSpot);
                 } else if(input.equals("status")) {
                     System.out.println();
-                    System.out.println("Health: " + health + " | EVE: " + eve);
+                    System.out.println("Health: " + health + " | EVE: " + eve + " | Coins: " + coins);
                     System.out.println();
                 } else if(input.equals("inventory")) {
                     inventory.show();

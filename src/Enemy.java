@@ -1,6 +1,6 @@
 import java.util.*;
 
-public abstract class Enemy {
+public class Enemy {
     private int health;
 
     private final int dodgeRate; // between 0 and 100
@@ -12,12 +12,16 @@ public abstract class Enemy {
 
     private boolean stunned = false;
 
-    public Enemy(int health, String name, String description, List<Attack> attacks, int dodgeRate) {
+    private RandomCollection<DropItem> randomCollection;
+
+    public Enemy(int health, String name, String description, List<Attack> attacks,
+                 int dodgeRate, RandomCollection<DropItem> randomCollection) {
         this.health = health;
         this.name = name;
         this.description = description;
         this.attacks = attacks;
         this.dodgeRate = dodgeRate;
+        this.randomCollection = randomCollection;
     }
 
     public int getHealth() {
@@ -58,5 +62,9 @@ public abstract class Enemy {
 
     public Attack getRandomAttack() {
         return attacks.get(new Random().nextInt(attacks.size()));
+    }
+
+    public DropItem getDropItem() {
+        return randomCollection.next();
     }
 }

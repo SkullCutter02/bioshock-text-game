@@ -1,8 +1,10 @@
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Battle {
     private int health;
     private int eve;
+    private int coins;
 
     private final Enemy enemy;
 
@@ -10,12 +12,13 @@ public class Battle {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public Battle(int health, int eve, Inventory inventory) {
+    public Battle(int health, int eve, int coins, Inventory inventory) {
         SplicerFactory factory = new SplicerFactory();
 
         this.enemy = factory.create();
         this.health = health;
         this.eve = eve;
+        this.coins = coins;
         this.inventory = inventory;
     }
 
@@ -28,10 +31,40 @@ public class Battle {
         return String.join(", ", attackNames);
     }
 
+    private void handleDrop(DropItem item) {
+        if(item.getName().equals("coins")) {
+            int r = ThreadLocalRandom.current().nextInt(0, 11);
+            coins += r;
+            System.out.println("You received " + r + " coins");
+        } else if(item.getName().equals("health pack")) {
+            inventory.addHealthPack();
+            System.out.println("You received a health pack");
+        } else if(item.getName().equals("eve hypo")) {
+            inventory.useEveHypo();
+            System.out.println("You received an eve hypo");
+        } else if(item.getName().split(" ")[item.getName().split(" ").length - 1].equals("ammo")) {
+            Weapon weapon = inventory.getWeapon(item.getTarget());
+
+            if(weapon != null) {
+                weapon.addAmmo(1);
+                System.out.println("You received a " + item.getName());
+            }
+            else
+                System.out.println("You received a " + item.getName() +
+                        ". However, since you don't have a " + item.getTarget() + " , you cannot receive this type of ammo");
+        }
+    }
+
     private void endBattle() {
         if (enemy.getHealth() <= 0) {
             System.out.println("The " + enemy.getName() + " collapsed and died, you won!");
+
+            DropItem item = enemy.getDropItem();
+            handleDrop(item);
+
             System.out.println();
+        } else if(health <= 0) {
+            System.out.println("You died!");
         }
     }
 
@@ -91,7 +124,7 @@ public class Battle {
                         System.out.println("You successfully dodged the attack!");
                     } else {
                         health -= attack.getDamage();
-                        System.out.println("The " + enemy.getName() + " dealt " + attack.getDamage() + " to you");
+                        System.out.println("The " + enemy.getName() + " dealt " + attack.getDamage() + " damage to you");
                         System.out.println("You are now on " + health + "HP");
                     }
                 }
@@ -126,7 +159,7 @@ public class Battle {
                 inventory.getItemDescription(splitted[1]);
             } else if(input.equals("status")) {
                 System.out.println();
-                System.out.println("Health: " + health + " | EVE: " + eve);
+                System.out.println("Health: " + health + " | EVE: " + eve + " | Coins: " + coins);
                 System.out.println();
             } else {
                 System.out.println("Try again with a valid input!");
@@ -142,6 +175,10 @@ public class Battle {
 
     public int getRemainingEve() {
         return eve;
+    }
+
+    public int getRemainingCoins() {
+        return coins;
     }
 
     public Inventory getRemainingInventory() {
