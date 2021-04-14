@@ -15,6 +15,10 @@ public class Inventory {
                 Integer.MAX_VALUE, 0, Integer.MAX_VALUE));
         weapons.add(new Weapon("Pistol", "A lightweight ranged weapon that fires one bullet at a time", 12,
                 15, 1, 10));
+        weapons.add(new Weapon("Machine Gun", "A ranged weapon that fires a rapid sprays of bullets", 20,
+                40, 10, 50));
+        weapons.add(new Weapon("Shotgun", "A closed-range weapon that fires a slug", 30,
+                3, 1, 1));
     }
 
     public int getHealthPackCount() {
@@ -89,8 +93,8 @@ public class Inventory {
                     System.out.println("Damage amount: " + weapon.getDamage());
 
                     if(weapon.getMaxAmmo() < 1000) {
-                        System.out.println("Max ammo count: " + weapon.getMaxAmmo());
-                        System.out.println("Current ammo count: " + weapon.getAmmoCount());
+                        System.out.println("Max ammo in weapon count: " + weapon.getMaxAmmo());
+                        System.out.println("Current unused ammo count: " + weapon.getAmmoCount());
                         System.out.println("Current ammo in weapon count: " + weapon.getCurrentAmmoCount());
                         System.out.println("Ammo reduction rate: " + weapon.getAmmoReductionRate());
                     }

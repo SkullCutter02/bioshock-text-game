@@ -13,7 +13,7 @@ public class Battle {
     private final Scanner scanner = new Scanner(System.in);
 
     public Battle(int health, int eve, int coins, Inventory inventory) {
-        SplicerFactory factory = new SplicerFactory();
+        EnemyFactory factory = new EnemyFactory();
 
         this.enemy = factory.create();
         this.health = health;
@@ -33,21 +33,30 @@ public class Battle {
 
     private void handleDrop(DropItem item) {
         if(item.getName().equals("coins")) {
-            int r = ThreadLocalRandom.current().nextInt(0, 11);
+            int r = ThreadLocalRandom.current().nextInt(5, 15);
             coins += r;
             System.out.println("You received " + r + " coins");
         } else if(item.getName().equals("health pack")) {
             inventory.addHealthPack();
             System.out.println("You received a health pack");
         } else if(item.getName().equals("eve hypo")) {
-            inventory.useEveHypo();
+            inventory.addEveHypo();
             System.out.println("You received an eve hypo");
         } else if(item.getName().split(" ")[item.getName().split(" ").length - 1].equals("ammo")) {
             Weapon weapon = inventory.getWeapon(item.getTarget());
 
             if(weapon != null) {
-                weapon.addAmmo(1);
-                System.out.println("You received a " + item.getName());
+                if(weapon.getName().equalsIgnoreCase("pistol")) {
+                    weapon.addAmmo(1);
+                    System.out.println("You received a pistol ammo");
+                } else if(weapon.getName().equalsIgnoreCase("machine gun")) {
+                    int r = ThreadLocalRandom.current().nextInt(5, 30);
+                    weapon.addAmmo(r);
+                    System.out.println("You received " + r + " machine gun ammo");
+                } else if(weapon.getName().equalsIgnoreCase("shotgun")) {
+                    weapon.addAmmo(1);
+                    System.out.println("You received a shotgun ammo");
+                }
             }
             else
                 System.out.println("You received a " + item.getName() +
@@ -80,6 +89,27 @@ public class Battle {
         System.out.println();
     }
 
+    private int enemyAttack(int stunRound) {
+        if(!enemy.isStunned()) {
+            Attack attack = enemy.getRandomAttack();
+            int r1 = (new Random()).nextInt(100);
+            System.out.println("The " + enemy.getName() + " " + attack.getDescription());
+
+            if (r1 < 5) {
+                System.out.println("You successfully dodged the attack!");
+            } else {
+                health -= attack.getDamage();
+                System.out.println("The " + enemy.getName() + " dealt " + attack.getDamage() + " damage to you");
+                System.out.println("You are now on " + health + "HP");
+            }
+        } else {
+            System.out.println("The " + enemy.getName() + " is now stunned by your electro bolt. It cannot attack!");
+            stunRound--;
+        }
+
+        return stunRound;
+    }
+
     public void start() {
         int stunRound = 2;
 
@@ -96,8 +126,7 @@ public class Battle {
                 stunRound = 2;
             }
 
-            if (input.split(" ")[0].equals("attack")) {
-                // player attack
+            if (input.split(" ")[0].equals("attack") && input.split(" ").length >= 2) {
                 Weapon playerWeapon = inventory.getWeapon(input.split(" ", 2)[1]);
 
                 if (playerWeapon != null) {
@@ -111,6 +140,7 @@ public class Battle {
                         System.out.println("You attacked with your " + playerWeapon.getName().toLowerCase());
                         int r = (new Random()).nextInt(100);
                         int headshotRate = (new Random()).nextInt(100);
+                        playerWeapon.use();
 
                         if (r < enemy.getDodgeRate()) {
                             System.out.println("The " + enemy.getName() + " dodged your attack");
@@ -118,7 +148,6 @@ public class Battle {
                             if(headshotRate <= 10) System.out.println("It's a headshot!");
                             int damage = headshotRate <= 10 ? playerWeapon.getDamage() * 2 : playerWeapon.getDamage();
                             enemy.damage(damage);
-                            playerWeapon.use();
                             System.out.println("You dealt " + damage + " damage to the " + enemy.getName());
                             System.out.println("The " + enemy.getName() + " is now on " + enemy.getHealth() + "HP");
 
@@ -131,32 +160,18 @@ public class Battle {
                             if (enemy.getHealth() <= 0) break;
                         }
                     }
-
-                    // enemy attack
-                    if(!enemy.isStunned()) {
-                        Attack attack = enemy.getRandomAttack();
-                        int r1 = (new Random()).nextInt(100);
-                        System.out.println("The " + enemy.getName() + " " + attack.getDescription());
-
-                        if (r1 < 5) {
-                            System.out.println("You successfully dodged the attack!");
-                        } else {
-                            health -= attack.getDamage();
-                            System.out.println("The " + enemy.getName() + " dealt " + attack.getDamage() + " damage to you");
-                            System.out.println("You are now on " + health + "HP");
-                        }
-                    } else {
-                        System.out.println("The " + enemy.getName() + " is now stunned by your electro bolt. It cannot attack!");
-                        stunRound--;
-                    }
                 }
 
+                stunRound = enemyAttack(stunRound);
                 System.out.println();
             } else if(input.split(" ")[0].equals("reload")) {
                 Weapon weapon = inventory.getWeapon(input.split(" ", 2)[1]);
 
                 if(weapon != null)
                     weapon.reload();
+
+                stunRound = enemyAttack(stunRound);
+                System.out.println();
             } else if (input.equals("description")) {
                 System.out.println();
                 System.out.println("Name: " + enemy.getName());
@@ -173,14 +188,20 @@ public class Battle {
                 if(canUse) {
                     health = Math.min(100, health + 50);
                     System.out.println("You restored your health to " + health);
+
+                    stunRound = enemyAttack(stunRound);
+                    System.out.println();
                 }
             } else if(input.equals("use-eve")) {
                 boolean canUse = inventory.useEveHypo();
                 if(canUse) {
                     eve = Math.min(5, eve + 3);
                     System.out.println("You restored your EVE level to " + eve);
+
+                    stunRound = enemyAttack(stunRound);
+                    System.out.println();
                 }
-            } else if(input.split(" ")[0].equals("get-info")) {
+            } else if(input.split(" ")[0].equals("get-info") && input.split(" ").length >= 2) {
                 String[] splitted = input.split(" ", 2);
                 inventory.getItemDescription(splitted[1]);
             } else if(input.equals("status")) {

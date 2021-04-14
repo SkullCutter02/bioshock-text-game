@@ -16,6 +16,7 @@ public class Weapon {
         this.ammoReductionRate = ammoReductionRate;
         this.maxAmmo = maxAmmo;
         this.currentAmmoCount = Math.min(this.maxAmmo, this.ammoCount);
+        this.ammoCount = Math.max(0, this.ammoCount - currentAmmoCount);
     }
 
     public String getName() {
@@ -53,16 +54,19 @@ public class Weapon {
     public void reload() {
         if(ammoCount <= 0)
             System.out.println("You ran out of ammo for your " + name + "!");
-        else
-            System.out.println(name + " successfully reloaded!");
-
-        this.currentAmmoCount = Math.min(maxAmmo, ammoCount);
-        ammoCount = Math.max(0, ammoCount - maxAmmo);
-
+        else {
+            if(currentAmmoCount == maxAmmo)
+                System.out.println(name + " is already full!");
+            else {
+                int temp = currentAmmoCount;
+                this.currentAmmoCount = Math.min(maxAmmo, currentAmmoCount + ammoCount);
+                this.ammoCount = Math.max(0, ammoCount - (currentAmmoCount - temp));
+                System.out.println(name + " successfully reloaded!");
+            }
+        }
     }
 
     public void use() {
-        this.ammoCount = Math.max(0, ammoCount - ammoReductionRate);
         this.currentAmmoCount = Math.max(0, currentAmmoCount - ammoReductionRate);
     }
 }

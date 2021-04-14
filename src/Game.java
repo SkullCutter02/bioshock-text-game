@@ -14,41 +14,50 @@ public class Game {
     private int eve = 5;
     private int coins = 0;
 
-    private void movePlayer(String command) {
-        switch (command) {
-            case "u" -> {
-                if (currentYSpot - 1 < 0)
-                    System.out.println("You cannot go up any further!");
-                else
-                    currentYSpot -= 1;
-            }
-            case "d" -> {
-                if (currentYSpot + 1 >= MAP_Y)
-                    System.out.println("You cannot go down any further!");
-                else
-                    currentYSpot += 1;
-            }
-            case "l" -> {
-                if (currentXSpot - 1 < 0)
-                    System.out.println("You cannot go left any further!");
-                else
-                    currentXSpot -= 1;
-            }
-            case "r" -> {
-                if (currentXSpot + 1 >= MAP_X)
-                    System.out.println("You cannot go right any further!");
-                else
-                    currentXSpot += 1;
-            }
-            default -> System.out.println("This shouldn't happen lol");
-        }
-
+    private void action() {
         Battle battle = new Battle(health, eve, coins, inventory);
         battle.start();
         health = battle.getRemainingHealth();
         eve = battle.getRemainingEve();
         coins = battle.getRemainingCoins();
         inventory = battle.getRemainingInventory();
+    }
+
+    private void movePlayer(String command) {
+        switch (command) {
+            case "u" -> {
+                if (currentYSpot - 1 < 0)
+                    System.out.println("You cannot go up any further!");
+                else {
+                    currentYSpot -= 1;
+                    action();
+                }
+            }
+            case "d" -> {
+                if (currentYSpot + 1 >= MAP_Y)
+                    System.out.println("You cannot go down any further!");
+                else {
+                    currentYSpot += 1;
+                    action();
+                }
+            }
+            case "l" -> {
+                if (currentXSpot - 1 < 0)
+                    System.out.println("You cannot go left any further!");
+                else {
+                    currentXSpot -= 1;
+                    action();
+                }
+            }
+            case "r" -> {
+                if (currentXSpot + 1 >= MAP_X)
+                    System.out.println("You cannot go right any further!");
+                else {
+                    currentXSpot += 1;
+                    action();
+                }
+            }
+        }
     }
 
     private void showCommands() {
