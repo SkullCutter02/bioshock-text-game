@@ -18,9 +18,8 @@ public class Game {
     private void action() {
         System.out.println();
         int n = ThreadLocalRandom.current().nextInt(0, 101);
-        System.out.println(n);
 
-        if (n < 30) {
+        if (n < 25) {
             RandomCollection<DropItem> collection = new RandomCollection<DropItem>()
                     .add(45, new DropItem("coins", "coins"))
                     .add(15, new DropItem("pistol ammo", "pistol"))

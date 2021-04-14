@@ -11,7 +11,7 @@ public class Inventory {
                 "A melee weapon that deals a large amount of damage", 10,
                 Integer.MAX_VALUE, 0, Integer.MAX_VALUE));
         weapons.add(new Weapon("Electro Bolt",
-                "A plasmid that allows you to shoot electricity from your hands", 5,
+                "A plasmid that allows you to shoot electricity from your hands and stun enemy. While stunned, enemies take 5 more damage than usual and cannot move. Uses one EVE every time", 5,
                 Integer.MAX_VALUE, 0, Integer.MAX_VALUE));
         weapons.add(new Weapon("Pistol", "A lightweight ranged weapon that fires one bullet at a time", 12,
                 15, 1, 10));
