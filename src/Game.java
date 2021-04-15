@@ -11,11 +11,11 @@ public class Game {
     private int currentXSpot = 5;
     private int currentYSpot = 6;
 
-    private int health = 5;
+    private int health = 100;
     private int eve = 5;
     private int coins = 20;
 
-    private boolean hasWon;
+    private boolean hasWon = false;
 
     private void action() {
         System.out.println();
@@ -178,6 +178,8 @@ public class Game {
             coins = 0;
             health = 100;
             eve = 5;
+            currentXSpot = 5;
+            currentYSpot = 6;
             main();
         }
     }
