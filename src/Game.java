@@ -11,9 +11,11 @@ public class Game {
     private int currentXSpot = 5;
     private int currentYSpot = 6;
 
-    private int health = 100;
+    private int health = 5;
     private int eve = 5;
-    private int coins = 200;
+    private int coins = 20;
+
+    private boolean hasWon;
 
     private void action() {
         System.out.println();
@@ -128,7 +130,7 @@ public class Game {
 
         Scanner scanner = new Scanner(System.in);
 
-        while (true) {
+        while (health > 0 && !hasWon) {
             try {
                 System.out.println("Type L for left, R for right, U for up and D for down. " +
                         "Type commands to show all the other commands you can type");
@@ -166,6 +168,17 @@ public class Game {
             } catch (Exception e) {
                 System.out.println("Try again with a valid input!\n");
             }
+        }
+
+        if(health <= 0) {
+            System.out.println("You died! Respawning you to the Vita Chamber");
+            System.out.println("Because you died, you have lost all your coins");
+            System.out.println("Please press enter to continue your journey");
+            scanner.nextLine();
+            coins = 0;
+            health = 100;
+            eve = 5;
+            main();
         }
     }
 }

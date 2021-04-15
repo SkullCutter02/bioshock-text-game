@@ -2,7 +2,7 @@ public class Map {
     private final int MAP_X;
     private final int MAP_Y;
 
-    private final int[][] vendingMachineLocations = {{2, 4}, {6, 1}, {5, 5}, {9, 3}};
+    private final int[][] vendingMachineLocations = {{2, 4}, {6, 1}, {4, 5}, {9, 3}};
 
     public Map(int MAP_X, int MAP_Y) {
         this.MAP_X = MAP_X;

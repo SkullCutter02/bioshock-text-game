@@ -73,8 +73,6 @@ public class Battle {
             handleDrop(item);
 
             System.out.println();
-        } else if (health <= 0) {
-            System.out.println("You died!");
         }
     }
 
@@ -133,7 +131,7 @@ public class Battle {
                 int damage = enemy.isStunned() ? 10 : 5;
                 enemy.damage(damage);
                 System.out.println("The " + enemy.getName() + " took " + damage + " damage from its burns");
-            } else if(burnRound <= 0) {
+            } else if(burnRound <= 0 && enemy.isBurnt()) {
                 System.out.println("The " + enemy.getName() + " has recovered from its burn");
                 enemy.unburn();
                 burnRound = 3;

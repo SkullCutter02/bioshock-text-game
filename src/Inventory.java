@@ -15,7 +15,7 @@ public class Inventory {
                 Integer.MAX_VALUE, 0, Integer.MAX_VALUE, "electro_bolt.wav"));
         weapons.add(new Weapon("Incinerate", "A plasmid that allows you to shoot fire from your hands and burn your enemy. While burnt, enemies take 5 damage every turn. Uses one EVE", 5,
                 Integer.MAX_VALUE, 0, Integer.MAX_VALUE, "incinerate.wav"));
-        weapons.add(new Weapon("Pistol", "A lightweight ranged weapon that fires one bullet at a time", 12,
+        weapons.add(new Weapon("Pistol", "A lightweight ranged weapon that fires one bullet at a time", 15,
                 15, 1, 10, "pistol.wav"));
         weapons.add(new Weapon("Machine Gun", "A ranged weapon that fires a rapid sprays of bullets", 20,
                 40, 10, 50, "machine_gun.wav"));
