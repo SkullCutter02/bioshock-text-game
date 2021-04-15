@@ -190,7 +190,9 @@ public class Battle {
                 Weapon weapon = inventory.getWeapon(input.split(" ", 2)[1]);
 
                 if (weapon != null) {
-                    if (weapon.getName().equalsIgnoreCase("wrench") || weapon.getName().equalsIgnoreCase("electro bolt"))
+                    if (weapon.getName().equalsIgnoreCase("wrench")
+                            || weapon.getName().equalsIgnoreCase("electro bolt")
+                            || weapon.getName().equalsIgnoreCase("incinerate"))
                         System.out.println(weapon.getName() + " cannot be reloaded!");
                     else {
                         weapon.reload();
