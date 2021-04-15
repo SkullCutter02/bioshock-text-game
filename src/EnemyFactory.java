@@ -19,47 +19,47 @@ public class EnemyFactory {
     private final List<Enemy> enemies = Arrays.asList(
             new Enemy(30, "Thuggish Splicer", "A fast moving splicer who focuses on melee attacks",
                     Arrays.asList(attacks.get(0), attacks.get(1)), 15,
-                    new RandomCollection<DropItem>()
-                            .add(80, new DropItem("coins", "coins"))
-                            .add(20, new DropItem("health pack", "health pack"))),
+                    new RandomCollection<Item>()
+                            .add(80, new Item("coins", "coins"))
+                            .add(20, new Item("health pack", "health pack"))),
             new Enemy(40, "Leadhead Splicer", "A tough splicer who attacks from a distance using pistols and machine guns",
                     Arrays.asList(attacks.get(0), attacks.get(1), attacks.get(2), attacks.get(3)), 5,
-                    new RandomCollection<DropItem>()
-                            .add(45, new DropItem("coins", "coins"))
-                            .add(15, new DropItem("pistol ammo", "pistol"))
-                            .add(15, new DropItem("machine gun ammo", "machine gun"))
-                            .add(10, new DropItem("health pack", "health pack"))
-                            .add(5, new DropItem("eve hypo", "eve hypo"))
-                            .add(10, new DropItem("shotgun ammo", "shotgun"))),
+                    new RandomCollection<Item>()
+                            .add(45, new Item("coins", "coins"))
+                            .add(15, new Item("pistol ammo", "pistol"))
+                            .add(15, new Item("machine gun ammo", "machine gun"))
+                            .add(10, new Item("health pack", "health pack"))
+                            .add(5, new Item("eve hypo", "eve hypo"))
+                            .add(10, new Item("shotgun ammo", "shotgun"))),
             new Enemy(20, "Spider Splicer", "This splicer can crawl on ceilings and throw hooks at you from afar. They are also fast and hard to hit",
                     Arrays.asList(attacks.get(4), attacks.get(4), attacks.get(5)), 30,
-                    new RandomCollection<DropItem>()
-                            .add(80, new DropItem("coins", "coins"))
-                            .add(5, new DropItem("health pack", "health pack"))
-                            .add(15, new DropItem("eve hypo", "eve hypo"))),
+                    new RandomCollection<Item>()
+                            .add(80, new Item("coins", "coins"))
+                            .add(5, new Item("health pack", "health pack"))
+                            .add(15, new Item("eve hypo", "eve hypo"))),
             new Enemy(30, "Houdini Splicer", "This splicer can shoot fireballs and ice balls from its hands",
                     Arrays.asList(attacks.get(6), attacks.get(7), attacks.get(0), attacks.get(1)), 15,
-                    new RandomCollection<DropItem>()
-                            .add(45, new DropItem("coins", "coins"))
-                            .add(15, new DropItem("pistol ammo", "pistol"))
-                            .add(15, new DropItem("machine gun ammo", "machine gun"))
-                            .add(10, new DropItem("health pack", "health pack"))
-                            .add(5, new DropItem("eve hypo", "eve hypo"))
-                            .add(10, new DropItem("shotgun ammo", "shotgun"))),
+                    new RandomCollection<Item>()
+                            .add(45, new Item("coins", "coins"))
+                            .add(15, new Item("pistol ammo", "pistol"))
+                            .add(15, new Item("machine gun ammo", "machine gun"))
+                            .add(10, new Item("health pack", "health pack"))
+                            .add(5, new Item("eve hypo", "eve hypo"))
+                            .add(10, new Item("shotgun ammo", "shotgun"))),
             new Enemy(30, "Nitro Splicer", "A splicer that throws grenades and molotov cocktails at you",
                     Arrays.asList(attacks.get(8), attacks.get(9), attacks.get(9), attacks.get(9)), 20,
-                    new RandomCollection<DropItem>()
-                            .add(70, new DropItem("coins", "coins"))
-                            .add(15, new DropItem("health pack", "health pack"))
-                            .add(15, new DropItem("eve hypo", "eve hypo"))),
+                    new RandomCollection<Item>()
+                            .add(70, new Item("coins", "coins"))
+                            .add(15, new Item("health pack", "health pack"))
+                            .add(15, new Item("eve hypo", "eve hypo"))),
             new Enemy(80, "Brute Splicer", "A huge splicer that has a ton of health and brute force",
                     Arrays.asList(attacks.get(10), attacks.get(11)), 5,
-                    new RandomCollection<DropItem>()
-                            .add(45, new DropItem("coins", "coins"))
-                            .add(15, new DropItem("pistol ammo", "pistol"))
-                            .add(15, new DropItem("machine gun ammo", "machine gun"))
-                            .add(15, new DropItem("health pack", "health pack"))
-                            .add(10, new DropItem("shotgun ammo", "shotgun")))
+                    new RandomCollection<Item>()
+                            .add(45, new Item("coins", "coins"))
+                            .add(15, new Item("pistol ammo", "pistol"))
+                            .add(15, new Item("machine gun ammo", "machine gun"))
+                            .add(15, new Item("health pack", "health pack"))
+                            .add(10, new Item("shotgun ammo", "shotgun")))
     );
 
     public Enemy create() {

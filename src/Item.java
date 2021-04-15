@@ -1,8 +1,8 @@
-public class DropItem {
+public class Item {
     private final String name;
     private final String target;
 
-    public DropItem(String name, String target) {
+    public Item(String name, String target) {
         this.name = name;
         this.target = target;
     }

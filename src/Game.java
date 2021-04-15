@@ -13,45 +13,50 @@ public class Game {
 
     private int health = 100;
     private int eve = 5;
-    private int coins = 0;
+    private int coins = 200;
 
     private void action() {
         System.out.println();
         int n = ThreadLocalRandom.current().nextInt(0, 101);
 
-        if (n < 25) {
-            RandomCollection<DropItem> collection = new RandomCollection<DropItem>()
-                    .add(20, new DropItem("coins", "coins"))
-                    .add(15, new DropItem("pistol ammo", "pistol"))
-                    .add(15, new DropItem("machine gun ammo", "machine gun"))
-                    .add(15, new DropItem("health pack", "health pack"))
-                    .add(20, new DropItem("eve hypo", "eve hypo"))
-                    .add(15, new DropItem("shotgun ammo", "shotgun"));
-            DropItem item = collection.next();
+        if (map.isVendingMachineSpot(currentXSpot, currentYSpot)) {
+            VendingMachine machine = new VendingMachine(coins, inventory);
+            machine.enterMode();
+            coins = machine.getRemainingCoins();
+            inventory = machine.getRemainingInventory();
+        } else if (n < 25) {
+            RandomCollection<Item> collection = new RandomCollection<Item>()
+                    .add(20, new Item("coins", "coins"))
+                    .add(15, new Item("pistol ammo", "pistol"))
+                    .add(15, new Item("machine gun ammo", "machine gun"))
+                    .add(15, new Item("health pack", "health pack"))
+                    .add(20, new Item("eve hypo", "eve hypo"))
+                    .add(15, new Item("shotgun ammo", "shotgun"));
+            Item item = collection.next();
 
-            if(item.getName().equals("coins")) {
+            if (item.getName().equals("coins")) {
                 int r = ThreadLocalRandom.current().nextInt(5, 15);
                 coins += r;
                 System.out.println("You found " + r + " coins lying on the floor. You took the coins");
-            } else if(item.getName().equals("health pack")) {
+            } else if (item.getName().equals("health pack")) {
                 inventory.addHealthPack();
                 System.out.println("You found a health pack lying on the floor. You took the health pack");
-            } else if(item.getName().equals("eve hypo")) {
+            } else if (item.getName().equals("eve hypo")) {
                 inventory.addEveHypo();
                 System.out.println("You found an eve hypo lying on the floor. You took the eve hypo");
-            } else if(item.getName().split(" ")[item.getName().split(" ").length - 1].equals("ammo")) {
+            } else if (item.getName().split(" ")[item.getName().split(" ").length - 1].equals("ammo")) {
                 Weapon weapon = inventory.getWeapon(item.getTarget());
 
-                if(weapon != null) {
-                    if(weapon.getName().equalsIgnoreCase("pistol")) {
+                if (weapon != null) {
+                    if (weapon.getName().equalsIgnoreCase("pistol")) {
                         int r = ThreadLocalRandom.current().nextInt(1, 3);
                         weapon.addAmmo(r);
                         System.out.println("You found " + r + " pistol ammo lying on the floor. You took the ammo");
-                    } else if(weapon.getName().equalsIgnoreCase("machine gun")) {
+                    } else if (weapon.getName().equalsIgnoreCase("machine gun")) {
                         int r = ThreadLocalRandom.current().nextInt(5, 30);
                         weapon.addAmmo(r);
                         System.out.println("You found " + r + " machine gun ammo lying on the floor. You took the ammo");
-                    } else if(weapon.getName().equalsIgnoreCase("shotgun")) {
+                    } else if (weapon.getName().equalsIgnoreCase("shotgun")) {
                         weapon.addAmmo(1);
                         System.out.println("You found a shotgun ammo lying on the floor. You took the ammo");
                     }

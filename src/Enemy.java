@@ -13,10 +13,10 @@ public class Enemy {
     private boolean stunned = false;
     private boolean burnt = false;
 
-    private final RandomCollection<DropItem> randomCollection;
+    private final RandomCollection<Item> randomCollection;
 
     public Enemy(int health, String name, String description, List<Attack> attacks,
-                 int dodgeRate, RandomCollection<DropItem> randomCollection) {
+                 int dodgeRate, RandomCollection<Item> randomCollection) {
         this.health = health;
         this.name = name;
         this.description = description;
@@ -77,7 +77,7 @@ public class Enemy {
         return attacks.get(new Random().nextInt(attacks.size()));
     }
 
-    public DropItem getDropItem() {
+    public Item getDropItem() {
         return randomCollection.next();
     }
 }

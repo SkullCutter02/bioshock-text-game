@@ -34,7 +34,7 @@ public class Battle {
         return String.join(", ", attackNames);
     }
 
-    private void handleDrop(DropItem item) {
+    private void handleDrop(Item item) {
         if (item.getName().equals("coins")) {
             int r = ThreadLocalRandom.current().nextInt(5, 15);
             coins += r;
@@ -69,7 +69,7 @@ public class Battle {
         if (enemy.getHealth() <= 0) {
             System.out.println("The " + enemy.getName() + " collapsed and died, you won!");
 
-            DropItem item = enemy.getDropItem();
+            Item item = enemy.getDropItem();
             handleDrop(item);
 
             System.out.println();
@@ -119,7 +119,8 @@ public class Battle {
             burnRound--;
 
             System.out.println("Type \"attack <weapon name>\" to damage the " + enemy.getName() + ". " +
-                    "Type description to get the enemy's description. Type commands to show all the other commands you can type");
+                    "Type description to get the enemy's description. \n" +
+                    "Type inventory to view your inventory and weapons. Type commands to show all the other commands you can type.");
             String input = scanner.nextLine().trim().toLowerCase();
 
             if (enemy.isStunned() && stunRound <= 0) {
