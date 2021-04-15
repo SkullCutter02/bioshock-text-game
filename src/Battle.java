@@ -174,7 +174,7 @@ public class Battle {
                             }
 
                             if(playerWeapon.getName().equalsIgnoreCase("incinerate")) {
-                                System.out.println("The " + enemy.getName() + "is now burnt by your incinerate");
+                                System.out.println("The " + enemy.getName() + " is now burnt by your incinerate");
                                 enemy.burn();
                                 burnRound = 3;
                             }
@@ -182,10 +182,10 @@ public class Battle {
                             if (enemy.getHealth() <= 0) break;
                         }
                     }
-                }
 
-                enemyAttack();
-            } else if (input.split(" ")[0].equals("reload")) {
+                    enemyAttack();
+                }
+            } else if (input.split(" ")[0].equals("reload") && input.split(" ").length >= 2) {
                 Weapon weapon = inventory.getWeapon(input.split(" ", 2)[1]);
 
                 if (weapon != null) {
@@ -231,7 +231,6 @@ public class Battle {
                 System.out.println("Health: " + health + " | EVE: " + eve + " | Coins: " + coins);
                 System.out.println();
             } else if(input.equals("taunt")) {
-                System.out.println();
                 System.out.println("You told the " + enemy.getName() + " that he is ugly");
                 enemyAttack();
             } else {

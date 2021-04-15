@@ -21,12 +21,12 @@ public class Game {
 
         if (n < 25) {
             RandomCollection<DropItem> collection = new RandomCollection<DropItem>()
-                    .add(45, new DropItem("coins", "coins"))
+                    .add(20, new DropItem("coins", "coins"))
                     .add(15, new DropItem("pistol ammo", "pistol"))
                     .add(15, new DropItem("machine gun ammo", "machine gun"))
-                    .add(10, new DropItem("health pack", "health pack"))
-                    .add(5, new DropItem("eve hypo", "eve hypo"))
-                    .add(10, new DropItem("shotgun ammo", "shotgun"));
+                    .add(15, new DropItem("health pack", "health pack"))
+                    .add(20, new DropItem("eve hypo", "eve hypo"))
+                    .add(15, new DropItem("shotgun ammo", "shotgun"));
             DropItem item = collection.next();
 
             if(item.getName().equals("coins")) {
