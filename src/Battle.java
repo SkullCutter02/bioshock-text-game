@@ -25,6 +25,14 @@ public class Battle {
         this.inventory = inventory;
     }
 
+    public Battle(int health, int eve, int coins, Inventory inventory, Enemy enemy) {
+        this.health = health;
+        this.eve = eve;
+        this.coins = coins;
+        this.inventory = inventory;
+        this.enemy = enemy;
+    }
+
     private String getEnemyAttacks() {
         List<String> attackNames = new ArrayList<>();
 
@@ -70,7 +78,9 @@ public class Battle {
             System.out.println("The " + enemy.getName() + " collapsed and died, you won!");
 
             Item item = enemy.getDropItem();
-            handleDrop(item);
+
+            if(item != null)
+                handleDrop(item);
 
             System.out.println();
         }

@@ -9,19 +9,49 @@ public class Game {
     private Inventory inventory = new Inventory();
 
     private int currentXSpot = 5;
-    private int currentYSpot = 6;
+    private int currentYSpot = 1;
 
     private int health = 100;
     private int eve = 5;
     private int coins = 20;
 
     private boolean hasWon = false;
+    private boolean hasEncounteredBoss = false;
+
+    private final Scanner scanner = new Scanner(System.in);
+
+    private final String ANSI_CYAN = "\u001B[36m";
+    private final String ANSI_RESET = "\u001B[0m";
 
     private void action() {
         System.out.println();
         int n = ThreadLocalRandom.current().nextInt(0, 101);
 
-        if (map.isVendingMachineSpot(currentXSpot, currentYSpot)) {
+        if(map.isBossFightSpot(currentXSpot, currentYSpot)) {
+            if(!hasEncounteredBoss) {
+                (new BossFightDialogue()).start();
+                hasEncounteredBoss = true;
+            }
+
+            System.out.println("You are about to face the final boss, are you ready? (Y/N)");
+            String input = scanner.nextLine().trim().toLowerCase();
+
+            if(input.equals("y")) {
+                List<Attack> attacks = Arrays.asList(new Attack(10, "Drill Dash", "charged at you, drilling its big, mean drill into your stomach"));
+
+                Enemy bigDaddy = new Enemy(10, "Big Daddy", "Heavily spliced human beings that have been grafted into heavily armoured diving suits. Also equipped with a big drill",
+                        Arrays.asList(attacks.get(0)), 10, null);
+
+                Battle battle = new Battle(health, eve, coins, inventory, bigDaddy);
+                battle.start();
+                health = battle.getRemainingHealth();
+                eve = battle.getRemainingEve();
+                coins = battle.getRemainingCoins();
+                inventory = battle.getRemainingInventory();
+
+                if(health > 0) hasWon = true;
+            }
+        } else if (map.isVendingMachineSpot(currentXSpot, currentYSpot)) {
             VendingMachine machine = new VendingMachine(coins, inventory);
             machine.enterMode();
             coins = machine.getRemainingCoins();
@@ -128,8 +158,6 @@ public class Game {
     public void main() {
         map.displayMap(currentXSpot, currentYSpot);
 
-        Scanner scanner = new Scanner(System.in);
-
         while (health > 0 && !hasWon) {
             try {
                 System.out.println("Type L for left, R for right, U for up and D for down. " +
@@ -166,7 +194,7 @@ public class Game {
                 } else
                     System.out.println("Try again with a valid input!\n");
             } catch (Exception e) {
-                System.out.println("Try again with a valid input!\n");
+                System.out.println(Arrays.toString(e.getStackTrace()));
             }
         }
 
@@ -181,6 +209,36 @@ public class Game {
             currentXSpot = 5;
             currentYSpot = 6;
             main();
+        } else if(hasWon) {
+            System.out.println("The Big Daddy collapsed onto the floor. The Little Sister he is guarding starts screaming. You grabbed hold of the Little Sister");
+            System.out.println("You have two choices: save or harvest the Little Sister. The choice is yours (S to save, H to harvest)");
+            String input = scanner.nextLine().trim().toLowerCase();
+
+            if(input.equals("s")) {
+                System.out.println("Using the harvest plasmid, you rest your hands on top of the Little Sister's head");
+                scanner.nextLine();
+                System.out.println("The Little Sister stops struggling as you absorbed the ADAM inside of her");
+                scanner.nextLine();
+                System.out.println(ANSI_CYAN + "Tenenbaum: The path of the righteous is not always easy, yes? The reward will become clear in time... be patient");
+                scanner.nextLine();
+                System.out.println("Atlas: Tenenbaum's playing you for a sap. Those things may look like wee little girls, but looks don't make it so. You'll need all the Adam you can get to survive" + ANSI_RESET);
+                scanner.nextLine();
+            } else if(input.equals("h")) {
+                System.out.println("You seized the Little Sister and ripped open her stomach. In there reveals a huge slug, glowing under the dark light");
+                scanner.nextLine();
+                System.out.println("You reached into her stomach and grabbed hold of the slug, greedily absorbing all the ADAM within. The Little Sister's now dead body limply lies on the floor");
+                scanner.nextLine();
+                System.out.println(ANSI_CYAN + "Tenenbaum: No! My Little One! How dare you...");
+                scanner.nextLine();
+                System.out.println("Atlas: Don't listen to her whimpers, you will need all the ADAM you can get to survive" + ANSI_RESET);
+                scanner.nextLine();
+            }
+
+            System.out.println("You exited the room, entering the next area of the fallen city of Rapture - the Medical Pavilion");
+            scanner.nextLine();
+
+            System.out.println("You won the game!");
+            System.out.println("Click run on your IDE to play the game again! Thanks for playing!");
         }
     }
 }

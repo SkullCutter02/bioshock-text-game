@@ -78,6 +78,10 @@ public class Enemy {
     }
 
     public Item getDropItem() {
-        return randomCollection.next();
+        try {
+            return randomCollection.next();
+        } catch(Exception e) {
+            return null;
+        }
     }
 }
