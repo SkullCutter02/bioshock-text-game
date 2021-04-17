@@ -9,7 +9,7 @@ public class Game {
     private Inventory inventory = new Inventory();
 
     private int currentXSpot = 5;
-    private int currentYSpot = 6;
+    private int currentYSpot = 1;
 
     private int health = 100;
     private int eve = 5;
@@ -37,10 +37,15 @@ public class Game {
             String input = scanner.nextLine().trim().toLowerCase();
 
             if(input.equals("y")) {
-                List<Attack> attacks = Arrays.asList(new Attack(10, "Drill Dash", "charged at you, drilling its big, mean drill into your stomach"));
+                List<Attack> attacks = Arrays.asList(
+                        new Attack(10, "Drill Dash", "charged at you, drilling its big, mean drill into your stomach"),
+                        new Attack(3, "Howl", "lets out a huge howl, shaking the whole floor"),
+                        new Attack(15, "Drill Attack", "hits you with the now spinning drill"),
+                        new Attack(7, "Stomp", "stomped on you using its huge heavy feet"),
+                        new Attack(5, "Violent Shake", "caught you with both hands, and violently shook you up and down"));
 
-                Enemy bigDaddy = new Enemy(10, "Big Daddy", "Heavily spliced human beings that have been grafted into heavily armoured diving suits. Also equipped with a big drill",
-                        Arrays.asList(attacks.get(0)), 10, null);
+                Enemy bigDaddy = new Enemy(300, "Big Daddy", "Heavily spliced human beings that have been grafted into heavily armoured diving suits. Also equipped with a big drill",
+                        attacks, 10, null);
 
                 Battle battle = new Battle(health, eve, coins, inventory, bigDaddy);
                 battle.start();
@@ -232,6 +237,8 @@ public class Game {
                 scanner.nextLine();
                 System.out.println("Atlas: Don't listen to her whimpers, you will need all the ADAM you can get to survive" + ANSI_RESET);
                 scanner.nextLine();
+            } else {
+                System.out.println("You ignored the Little Sister, and walked away");
             }
 
             System.out.println("You exited the room, entering the next area of the fallen city of Rapture - the Medical Pavilion");
