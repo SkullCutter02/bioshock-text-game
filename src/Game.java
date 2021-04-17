@@ -9,7 +9,7 @@ public class Game {
     private Inventory inventory = new Inventory();
 
     private int currentXSpot = 5;
-    private int currentYSpot = 1;
+    private int currentYSpot = 6;
 
     private int health = 100;
     private int eve = 5;
