@@ -9,7 +9,7 @@ public class Game {
     private Inventory inventory = new Inventory();
 
     private int currentXSpot = 5;
-    private int currentYSpot = 1;
+    private int currentYSpot = 6;
 
     private int health = 100;
     private int eve = 5;
@@ -33,7 +33,7 @@ public class Game {
                 hasEncounteredBoss = true;
             }
 
-            System.out.println("You are about to face the final boss, are you ready? (Y/N)");
+            System.out.println("You are about to face the final boss, are you ready? Make sure you have enough ammo and equipment to fight this tough boss (Y/N)");
             String input = scanner.nextLine().trim().toLowerCase();
 
             if(input.equals("y")) {
